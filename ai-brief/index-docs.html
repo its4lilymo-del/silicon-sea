@@ -72,7 +72,7 @@ footer{padding:0 0 44px;font-size:12.5px;color:var(--ink3);text-align:center}
 <script>
 /* 版本自愈：拉远端 version.txt 与页面内嵌版本号比对，不一致则换新 URL 重载 */
 (function(){
-  var VER="v202609232159";
+  var VER="v202609241938";
   try{
     var x=new XMLHttpRequest();
     x.open('GET','version.txt?_='+Date.now(),true);
@@ -97,11 +97,11 @@ footer{padding:0 0 44px;font-size:12.5px;color:var(--ink3);text-align:center}
   <div class="wrap">
     <div class="brand">硅与海 · 文档库<span>全部过程文档公开可追溯</span></div>
     <div class="navlinks">
-      <a href="index.html?v202609232159">首页</a>
+      <a href="index.html?v202609241938">首页</a>
       <div class="sep"></div>
-      <a href="archive.html?v202609232159">往期日报</a>
+      <a href="archive.html?v202609241938">往期日报</a>
       <div class="sep"></div>
-      <a href="about.html?v202609232159">关于我们</a>
+      <a href="about.html?v202609241938">关于我们</a>
     </div>
   </div>
 </div>
@@ -221,7 +221,7 @@ function load(){
   buildNav(doc.f);
   var main=document.getElementById('main');
   main.innerHTML='<div class="loading">正在加载 '+doc.t+'…</div>';
-  fetch(doc.p+'?v202609232159').then(function(r){
+  fetch(doc.p+'?v202609241938').then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status);
     return r.text();
   }).then(function(t){
@@ -236,13 +236,13 @@ function load(){
     });
     window.scrollTo(0,0);
   }).catch(function(e){
-    main.innerHTML='<div class="err"><b>文档加载失败</b><br>'+doc.t+'（'+e.message+'）<br><br>请确认该文档文件与本站处于同一发布目录下；或返回<a href="index.html?v202609232159">项目主页</a>查看。</div>';
+    main.innerHTML='<div class="err"><b>文档加载失败</b><br>'+doc.t+'（'+e.message+'）<br><br>请确认该文档文件与本站处于同一发布目录下；或返回<a href="index.html?v202609241938">项目主页</a>查看。</div>';
   });
 }
 
 window.addEventListener('hashchange',load);
 load();
 </script>
-<script src="totop.js?v202609232159"></script>
+<script src="totop.js?v202609241938"></script>
 </body>
 </html>

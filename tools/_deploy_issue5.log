@@ -1,0 +1,14 @@
+[1/2] VER v202609232159 -> v202609241938  (patched: about.html, archive.html, index-docs.html, index.html, today.html)
+[2/2] deploying C:\Users\莫莉莉\WorkBuddy\2026-09-19-23-10-37\ai-brief -> silicon-sea
+⛅️ wrangler 4.136.3
+────────────────────
+Uploading... (25/33)
+Uploading... (28/33)
+Uploading... (31/33)
+Uploading... (33/33)
+✨ Success! Uploaded 8 files (25 already uploaded) (3.62 sec)
+
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://9784cbac.silicon-sea.pages.dev
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mProxy environment variables detected. We'll use your proxy for fetch requests.[0m
+DEPLOY OK -> https://silicon-sea.pages.dev/
