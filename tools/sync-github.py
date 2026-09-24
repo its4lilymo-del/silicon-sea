@@ -65,6 +65,26 @@ def fail(reason):
     print('GITHUB SYNC FAILED: %s' % reason)
 
 
+def fix_tracking_ref():
+    """本机 git 无法自行创建/更新 refs/remotes 下的引用（fetch/update-ref 静默无效，
+    push 会删旧写新但写不进去）。用 Python 直接维护这个引用，让 git status 不再显示 [gone]。"""
+    try:
+        r = run(['git', 'ls-remote', '--heads', 'origin', 'main'], timeout=30)
+        m = re.match(r'^([0-9a-f]{40})\b', (r.stdout or ''))
+        if not m:
+            return
+        sha = m.group(1)
+        d = os.path.join(BASE, '.git', 'refs', 'remotes', 'origin')
+        os.makedirs(d, exist_ok=True)
+        p = os.path.join(d, 'main')
+        cur = open(p, encoding='ascii').read().strip() if os.path.exists(p) else ''
+        if cur != sha:
+            with open(p, 'w', encoding='ascii') as f:
+                f.write(sha + '\n')
+    except Exception:
+        pass
+
+
 def main():
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -115,4 +135,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    finally:
+        fix_tracking_ref()
