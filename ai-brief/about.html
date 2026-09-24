@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关于我们 · 硅与海</title>
+<meta name="description" content="硅与海：每天 06:30 自动运行的具身智能 × 智能硬件出海行业情报 Agent。项目定位、运行数据与全部过程文档。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='38' fill='%23dcd2f2'/></svg>">
+<link href="https://db.onlinewebfonts.com/c/1ee2f72753afaa550435b7078d2d1213?family=Resist+Sans+Txt+Light" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="pages.css?v202609232159">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script>
+/* 版本自愈：拉远端 version.txt 与页面内嵌版本号比对，不一致则换新 URL 重载 */
+(function(){
+  var VER="v202609232159";
+  try{
+    var x=new XMLHttpRequest();
+    x.open('GET','version.txt?_='+Date.now(),true);
+    x.onreadystatechange=function(){
+      if(x.readyState!==4||x.status!==200) return;
+      var v=(x.responseText||'').trim().split('\n')[0].trim();
+      if(!v||v===VER) return;
+      var k="vb_"+v;
+      if(sessionStorage.getItem(k)==="1") return;
+      sessionStorage.setItem(k,"1");
+      var u=location.href.split("#")[0].split("?")[0];
+      location.replace(u+'?'+v+'&_='+Date.now());
+    };
+    x.send();
+  }catch(e){}
+})();
+</script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="brandline" href="index.html?v202609232159">
+    <b>硅与海</b><i>具身智能 × 智能硬件出海 · 每日精选</i>
+  </a>
+  <nav class="navpill">
+    <a href="index.html?v202609232159">首页</a>
+    <div class="sep"></div>
+    <a href="archive.html?v202609232159">往期日报</a>
+    <div class="sep"></div>
+    <a class="on" href="about.html?v202609232159">关于我们</a>
+  </nav>
+</div>
+
+<div class="shell">
+  <div class="split-rev">
+    <main class="panel about-frame">
+
+      <section id="what">
+        <h2>简介</h2>
+        <p class="lead"><strong>《硅与海》是一个每天 06:30 自动运行的 AI 行业情报 Agent。</strong>它把「具身智能 + 智能硬件出海」方向的当日动态，压成一份 10 分钟可读完的中文日报，每条都附原文链接与产品视角点评。</p>
+      </section>
+
+      <section id="why">
+        <h2>初衷</h2>
+        <p>人工追踪这个方向的行业动态，有三个绕不开的成本：</p>
+        <ul>
+          <li><strong>时间成本</strong>：每天 1–2 小时刷源、筛源、判断哪条值得看。</li>
+          <li><strong>覆盖不全</strong>：依赖平台算法推送，融资、量产节点、论文类关键事件最容易漏。</li>
+          <li><strong>出处难核</strong>：事件在媒体之间层层转述，数字与时间点容易漂移，必须回到当事方原文才算数。</li>
+        </ul>
+        <p>量化目标是把这个成本<strong>从约 120 分钟压到 10 分钟以内</strong>，并用评测集持续度量漏报率——不靠感觉说「够全了」，用数字说话。</p>
+        <p>每条入报内容都标注出处与可信度（官方 / 媒体 / 未证实），规则见《信源清单》。</p>
+      </section>
+
+      <section id="how">
+        <h2>机制</h2>
+        <p>五层链路，零服务器、零外部付费 API，编排载体是一个定时任务：</p>
+        <div class="arch">抓取层　T1 RSS + T2 公司 Newsroom 页面 + T3 周更源
+　↓
+筛选层　规则过滤 + LLM 逐条判断（入选 / 待审 / 剔除）
+　↓
+生成层　LLM 翻译、摘要、点评（系统提示词约束输出结构）
+　↓
+输出层　markdown 按日期归档
+　↓
+推送层　自建企业微信 webhook → 微信插件 → 个人微信</div>
+        <p>三个关键约束贯穿全程：</p>
+        <ul>
+          <li><strong>窗口策略</strong>：正报只认 24 小时保证「快」，文末【前日回溯】兜底保证「全」——用结构设计同时满足两个冲突诉求。</li>
+          <li><strong>宁缺毋滥</strong>：单期只有 1 条也照实发，宁可空仓不塞噪音。可信度优先于内容丰富度。</li>
+          <li><strong>人机边界</strong>：AI 负责抓取、筛选、翻译、摘要、初稿；人对事实、数字、判断负最终责任并署名发布。</li>
+        </ul>
+      </section>
+
+      <section id="docs">
+        <h2>文档</h2>
+        <p>公开的过程文档在线可读：</p>
+        <ul>
+          <li><a href="index-docs.html?v202609232159#/PRD.md">产品需求文档（PRD）</a></li>
+          <li><a href="index-docs.html?v202609232159#/sources.md">信源清单</a></li>
+        </ul>
+      </section>
+
+    </main>
+
+    <aside class="side toc-side panel">
+      <h3>目录</h3>
+      <a href="#what">简介</a>
+      <a href="#why">初衷</a>
+      <a href="#how">机制</a>
+      <a href="#docs">文档</a>
+    </aside>
+  </div>
+</div>
+
+<div class="foot">硅与海 · 10分钟读懂今天</div>
+
+<script>
+/* 右侧目录：点击滚动 + 高亮当前区块。
+   两个关键点（第一版都栽过）：
+   1. 区块纵坐标必须用 getBoundingClientRect 换算成文档绝对坐标——
+      .shell 是 position:relative，offsetTop 相对的是 .shell 而非文档，
+      直接用会少滚一个顶栏高度；
+   2. 「文档」是最后一节，页面总高有限，物理上滚不到「区块顶=视口顶」——
+      点击一律滚到 min(目标位置, 页面底)，保证区块完整进入视口；
+      滚到页底时高亮强制落在最后一节，否则目录永远亮不到「文档」。 */
+var links=[].slice.call(document.querySelectorAll('.toc-side a[href^="#"]'));
+var secs=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))}).filter(Boolean);
+
+function docTop(el){return el.getBoundingClientRect().top+(window.scrollY||window.pageYOffset||0)}
+function maxY(){return Math.max(0,document.documentElement.scrollHeight-window.innerHeight)}
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function sync(){
+  var y=(window.scrollY||window.pageYOffset||0),cur=null;
+  if(y>=maxY()-4&&secs.length){
+    cur=secs[secs.length-1].id;           /* 页底：高亮最后一节 */
+  }else{
+    var t=y+140;
+    secs.forEach(function(s){if(docTop(s)<=t)cur=s.id});
+  }
+  links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href').slice(1)===cur)});
+}
+
+links.forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    var t=document.getElementById(a.getAttribute('href').slice(1));
+    if(t)window.scrollTo({top:Math.min(docTop(t)-16,maxY()),behavior:reduce?'auto':'smooth'});
+  });
+});
+
+window.addEventListener('scroll',sync,{passive:true});
+window.addEventListener('resize',sync);
+sync();
+</script>
+<script src="totop.js?v202609232159"></script>
+</body>
+</html>

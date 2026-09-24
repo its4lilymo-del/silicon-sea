@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>往期日报 · 硅与海</title>
+<meta name="description" content="硅与海历史归档：按期数与日期倒序索引，站内直接阅读每一期全文。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='38' fill='%23dcd2f2'/></svg>">
+<link href="https://db.onlinewebfonts.com/c/1ee2f72753afaa550435b7078d2d1213?family=Resist+Sans+Txt+Light" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="pages.css?v202609232159">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script>
+/* 版本自愈：拉远端 version.txt 与页面内嵌版本号比对，不一致则换新 URL 重载 */
+(function(){
+  var VER="v202609232159";
+  try{
+    var x=new XMLHttpRequest();
+    x.open('GET','version.txt?_='+Date.now(),true);
+    x.onreadystatechange=function(){
+      if(x.readyState!==4||x.status!==200) return;
+      var v=(x.responseText||'').trim().split('\n')[0].trim();
+      if(!v||v===VER) return;
+      var k="vb_"+v;
+      if(sessionStorage.getItem(k)==="1") return;
+      sessionStorage.setItem(k,"1");
+      var u=location.href.split("#")[0].split("?")[0];
+      location.replace(u+'?'+v+'&_='+Date.now());
+    };
+    x.send();
+  }catch(e){}
+})();
+</script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="brandline" href="index.html?v202609232159">
+    <b>硅与海</b><i>具身智能 × 智能硬件出海 · 每日精选</i>
+  </a>
+  <nav class="navpill">
+    <a href="index.html?v202609232159">首页</a>
+    <div class="sep"></div>
+    <a class="on" href="archive.html?v202609232159">往期日报</a>
+    <div class="sep"></div>
+    <a href="about.html?v202609232159">关于我们</a>
+  </nav>
+</div>
+
+<div class="readbar" id="readbar"></div>
+
+<div class="shell">
+  <div class="split">
+    <aside class="side panel">
+      <h3>往期期数</h3>
+      <div id="index"><div class="loading" style="padding:18px 0">正在加载…</div></div>
+    </aside>
+
+    <main class="panel issue-frame" id="doc">
+      <div class="loading">正在加载日报…</div>
+    </main>
+  </div>
+</div>
+
+<div class="foot foot-note">10分钟读懂今天</div>
+
+<script src="md.js?v202609232159"></script>
+<script src="fx.js?v202609232159"></script>
+<script src="totop.js?v202609232159"></script>
+<script>
+var ITEMS=[];
+
+function renderIndex(current){
+  var box=document.getElementById('index');
+  box.innerHTML=ITEMS.map(function(d,i){
+    /* animation-delay 按索引递增，形成从上到下依次入场 */
+    return '<a class="issue'+(d.date===current?' on':'')+'" href="#/'+d.date+'"'
+      + ' style="animation-delay:'+(i*0.055).toFixed(3)+'s">'
+      + '<span class="no">第 '+d.issue+' 期</span>'
+      + '<span class="dt">'+d.date+'</span>'
+      + '</a>';
+  }).join('');
+}
+
+function load(date){
+  var doc=document.getElementById('doc');
+  var item=null;
+  ITEMS.forEach(function(d){if(d.date===date)item=d});
+  if(!item){
+    doc.innerHTML='<div class="err">未找到该期日报。</div>';
+    return;
+  }
+  renderIndex(date);
+
+  /* 换期过渡：先淡出，取到内容后再淡入 */
+  var first=!doc.querySelector('.meta');
+  if(!first){
+    doc.classList.remove('switched');
+    doc.classList.add('switching');
+  }
+
+  fetch('digests/'+item.date+'.md?v202609232159').then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    return r.text();
+  }).then(function(t){
+    /* meta 栏已显示期数与日期，去掉正文首个 H1 避免重复 */
+    t=t.replace(/^#\s+[^\n]*\n+/,'');
+    /* 去掉生成参数块；附录在「数据目录」页 */
+    t=t.replace(/^>\s*生成参数[^\n]*\n+/m,'');
+    var cut=t.search(/^## 数据看板/m);
+    if(cut>-1)t=t.slice(0,cut);
+
+    var paint=function(){
+      doc.innerHTML='<div class="meta">'
+        + '<span class="badge">第 '+item.issue+' 期</span>'
+        + '<span>'+item.date+'</span>'
+        + '<span class="meta-right">每天 06:30 自动生成</span>'
+        + '</div>'
+        + buildGradeFilter()+md(t);
+      rewriteLinks(doc,'digests/'+item.date+'.md');
+      fxMarkGrades(doc);
+      fxInit();
+      document.title='第 '+item.issue+' 期 · '+item.date+' · 硅与海';
+      window.scrollTo(0,0);
+      requestAnimationFrame(function(){
+        doc.classList.remove('switching');
+        doc.classList.add('switched');
+      });
+    };
+
+    if(first){paint()}
+    else{setTimeout(paint,180)}
+  }).catch(function(e){
+    doc.classList.remove('switching');
+    doc.innerHTML='<div class="err"><b>日报加载失败</b><br>'+item.date+'（'+e.message+'）'
+      +'<br><br>请稍后重试，或前往 <a href="today.html?v202609232159">今日日报</a>。</div>';
+  });
+}
+
+function route(){
+  var hash=decodeURIComponent((location.hash||'').replace(/^#\//,''));
+  if(!hash)hash=ITEMS.length?ITEMS[0].date:'';
+  load(hash);
+}
+
+fetch('digests.json?v202609232159').then(function(r){
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return r.json();
+}).then(function(data){
+  ITEMS=(data.digests||[]).slice().sort(function(a,b){return a.date<b.date?1:-1});
+  if(!ITEMS.length){
+    document.getElementById('index').innerHTML='<div class="loading" style="padding:18px 0">暂无归档</div>';
+    document.getElementById('doc').innerHTML='<div class="loading">暂无归档日报。</div>';
+    return;
+  }
+  route();
+}).catch(function(e){
+  document.getElementById('index').innerHTML='<div class="err" style="font-size:13px">索引加载失败</div>';
+  document.getElementById('doc').innerHTML='<div class="err"><b>归档索引加载失败</b><br>'+e.message+'</div>';
+});
+
+window.addEventListener('hashchange',route);
+</script>
+</body>
+</html>

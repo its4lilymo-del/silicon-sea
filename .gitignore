@@ -1,0 +1,23 @@
+# ===== 私有内容：绝不入库 =====
+private-docs/
+.workbuddy/
+.wrangler/
+tools/cloudflare-credentials.json
+
+# ===== 临时文件与备份 =====
+.tmp_*.py
+.wbapp_*.genie
+.frames/
+*.zip
+index-v1-backup.html
+
+# ===== QA 截图（保留脚本，不留大图）=====
+tools/_shot_*.png
+ai-brief/tools/_shot_*.png
+
+# ===== 系统 / 运行时 =====
+.DS_Store
+Thumbs.db
+node_modules/
+__pycache__/
+*.pyc

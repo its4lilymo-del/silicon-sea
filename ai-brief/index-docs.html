@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>硅与海 — 文档库 | 莫莉莉作品集</title>
+<meta name="description" content="《硅与海》项目公开文档：产品需求文档（PRD）与信源清单。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='38' fill='%23dcd2f2'/></svg>">
+<style>
+:root{
+  --bg:#f5f3fb; --card:#FFFFFF; --ink:#1c1a24; --ink2:#4a4658; --ink3:#7a7590;
+  --line:#ebe7f6; --accent:#5b46a8; --accent-bg:#f0edf9; --blue-ink:#5b46a8;
+  --amber-bg:#FAEEDA; --amber-ink:#854F0B; --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+/* 底色：纯色，无渐变、无光晕 */
+.top{position:relative;z-index:2;background:rgba(255,255,255,.72);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);border-bottom:1px solid rgba(255,255,255,.7);padding:22px 0}
+.top .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.brand{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.brand span{color:var(--ink3);font-weight:400;font-size:13px;margin-left:10px}
+.back{font-size:13px;color:var(--ink2);text-decoration:none;border-bottom:1px solid rgba(91,70,168,.28)}
+.back:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.navlinks{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+.navlinks a{font-size:13px;color:var(--ink2);text-decoration:none;border-bottom:none;transition:opacity .2s}
+.navlinks a:hover{color:var(--accent);opacity:1}
+.navlinks .sep{width:1px;height:13px;background:rgba(28,26,36,.16)}
+.wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 20px}
+.layout{display:flex;gap:20px;align-items:flex-start;padding:26px 0 60px}
+nav{flex:0 0 224px;position:sticky;top:18px;background:var(--card);border:1px solid #ebe7f6;border-radius:var(--radius);padding:14px;box-shadow:0 12px 40px rgba(97,78,160,.13)}
+nav h3{font-size:11.5px;color:var(--accent);font-weight:500;letter-spacing:.05em;margin:12px 0 6px;text-transform:uppercase}
+nav h3:first-child{margin-top:0}
+nav a{display:block;font-size:13.5px;color:var(--ink2);text-decoration:none;padding:5px 9px;border-radius:7px;margin-bottom:1px}
+nav a:hover{background:#f0edf9;color:var(--ink)}
+nav a.on{background:var(--accent-bg);color:var(--accent);font-weight:500}
+main{flex:1;min-width:0;background:var(--card);border:1px solid #ebe7f6;border-radius:var(--radius);padding:34px 38px;box-shadow:0 12px 40px rgba(97,78,160,.13)}
+main h1{font-size:25px;font-weight:600;letter-spacing:-.01em;margin:0 0 18px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+main h2{font-size:18.5px;font-weight:600;margin:30px 0 12px;letter-spacing:-.01em;padding-left:11px;border-left:3px solid #c9bcf0;line-height:1.4}
+main h3{font-size:15.5px;font-weight:600;margin:24px 0 10px}
+main h4{font-size:14px;font-weight:600;margin:18px 0 8px;color:var(--ink)}
+main p{font-size:14.5px;color:var(--ink2);margin-bottom:13px}
+main ul,main ol{padding-left:22px;margin-bottom:14px}
+main li{font-size:14.5px;color:var(--ink2);margin-bottom:6px}
+main a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(91,70,168,.28);word-break:break-all}
+main a:hover{border-bottom-color:var(--accent)}
+main code{background:var(--accent-bg);padding:1.5px 5px;border-radius:4px;font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink)}
+main pre{background:#f0edf9;border-radius:9px;padding:15px 17px;overflow-x:auto;margin-bottom:15px}
+main pre code{background:none;padding:0;font-size:12.5px;line-height:1.65}
+main hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+main blockquote{border-left:3px solid #c9bcf0;background:#f7f5fc;padding:12px 16px;border-radius:0 10px 10px 0;margin:0 0 15px}
+main blockquote p{color:var(--accent);margin:0;font-size:14px}
+main strong{color:var(--ink);font-weight:600}
+main em{font-style:normal;color:var(--ink3)}
+.tbl{overflow-x:auto;margin-bottom:17px;border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f0edf9;font-weight:600;font-size:12.5px;color:var(--accent);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.loading{font-size:14px;color:var(--ink3);padding:40px 0;text-align:center}
+.err{font-size:14px;color:#A32D2D;background:#FCEBEB;padding:16px 18px;border-radius:9px}
+footer{padding:0 0 44px;font-size:12.5px;color:var(--ink3);text-align:center}
+@media(max-width:860px){
+  .layout{flex-direction:column;gap:16px;padding:16px 0 40px}
+  nav{position:static;flex:none;width:100%}
+  main{padding:22px 20px}
+  main h1{font-size:21px}
+}
+</style>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script>
+/* 版本自愈：拉远端 version.txt 与页面内嵌版本号比对，不一致则换新 URL 重载 */
+(function(){
+  var VER="v202609232159";
+  try{
+    var x=new XMLHttpRequest();
+    x.open('GET','version.txt?_='+Date.now(),true);
+    x.onreadystatechange=function(){
+      if(x.readyState!==4||x.status!==200) return;
+      var v=(x.responseText||'').trim().split('\n')[0].trim();
+      if(!v||v===VER) return;
+      var k="vb_"+v;
+      if(sessionStorage.getItem(k)==="1") return;
+      sessionStorage.setItem(k,"1");
+      var u=location.href.split("#")[0].split("?")[0];
+      location.replace(u+'?'+v+'&_='+Date.now());
+    };
+    x.send();
+  }catch(e){}
+})();
+</script>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <div class="brand">硅与海 · 文档库<span>全部过程文档公开可追溯</span></div>
+    <div class="navlinks">
+      <a href="index.html?v202609232159">首页</a>
+      <div class="sep"></div>
+      <a href="archive.html?v202609232159">往期日报</a>
+      <div class="sep"></div>
+      <a href="about.html?v202609232159">关于我们</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="layout">
+    <nav id="nav"></nav>
+    <main id="main"><div class="loading">正在加载文档…</div></main>
+  </div>
+  <footer>硅与海 · 10分钟读懂今天</footer>
+</div>
+
+<script>
+var DOCS=[
+  {group:'公开文档',items:[
+    {t:'PRD（产品需求文档）',f:'PRD.md',p:'PRD.md'},
+    {t:'信源清单',f:'sources.md',p:'sources.md'}
+  ]}
+];
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function inline(s){
+  s=esc(s);
+  s=s.replace(/`([^`]+)`/g,'<code>$1</code>');
+  s=s.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  s=s.replace(/(^|[^*])\*([^*\s][^*]*)\*/g,'$1<em>$2</em>');
+  s=s.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s=s.replace(/(^|[\s(（])(https?:\/\/[^\s<)）]+)/g,'$1<a href="$2" target="_blank" rel="noopener">$2</a>');
+  return s;
+}
+
+function md(src){
+  var lines=src.replace(/\r\n/g,'\n').split('\n'),out=[],i=0;
+  function flushPara(buf){
+    var join=[],inPre=false;
+    for(var k=0;k<buf.length;k++){
+      if(/^```/.test(buf[k])){inPre=!inPre;continue}
+      join.push(inPre?esc(buf[k]):inline(buf[k]));
+    }
+    if(join.length)out.push('<p>'+join.join(inPre?'\n':'<br>')+'</p>');
+  }
+  while(i<lines.length){
+    var L=lines[i];
+    if(/^```/.test(L)){
+      var code=[];i++;
+      while(i<lines.length && !/^```/.test(lines[i])){code.push(esc(lines[i]));i++}
+      i++;out.push('<pre><code>'+code.join('\n')+'</code></pre>');continue;
+    }
+    if(/^\s*$/.test(L)){i++;continue}
+    var h=L.match(/^(#{1,6})\s+(.*)$/);
+    if(h){var lv=Math.min(h[1].length,4);out.push('<h'+lv+'>'+inline(h[2])+'</h'+lv+'>');i++;continue}
+    if(/^\s*([-*_])\s*\1\s*\1[\s\1]*$/.test(L)){out.push('<hr>');i++;continue}
+    if(/^>\s?/.test(L)){
+      var q=[];
+      while(i<lines.length && /^>\s?/.test(lines[i])){q.push(lines[i].replace(/^>\s?/,''));i++}
+      out.push('<blockquote><p>'+q.map(inline).join('<br>')+'</p></blockquote>');continue;
+    }
+    if(/^\s*\|.*\|\s*$/.test(L)){
+      var rows=[];
+      while(i<lines.length && /^\s*\|.*\|\s*$/.test(lines[i])){
+        rows.push(lines[i].trim().replace(/^\||\|$/g,'').split('|').map(function(c){return c.trim()}));i++;
+      }
+      var header=rows[0],body=rows.slice(1);
+      if(rows.length>1 && rows[1].every(function(c){return /^:?-{2,}:?$/.test(c)}))body=rows.slice(2);
+      var cols=Math.max.apply(null,rows.map(function(r){return r.length}));
+      var html='<div class="tbl"><table><thead><tr>';
+      for(var ci=0;ci<cols;ci++)html+='<th>'+(header[ci]!==undefined?inline(header[ci]):'&nbsp;')+'</th>';
+      html+='</tr></thead><tbody>';
+      body.forEach(function(r){
+        html+='<tr>';
+        for(var di=0;di<cols;di++)html+='<td>'+(r[di]!==undefined?inline(r[di]):'&nbsp;')+'</td>';
+        html+='</tr>';
+      });
+      html+='</tbody></table></div>';out.push(html);continue;
+    }
+    if(/^\s*([-*+]|\d+\.)\s+/.test(L)){
+      var items=[];
+      while(i<lines.length && /^\s*([-*+]|\d+\.)\s+/.test(lines[i])){
+        items.push(lines[i].replace(/^\s*([-*+]|\d+\.)\s+/,''));i++;
+      }
+      out.push('<ul>'+items.map(function(t){return '<li>'+inline(t)+'</li>'}).join('')+'</ul>');continue;
+    }
+    var buf=[];
+    while(i<lines.length && !/^\s*$/.test(lines[i]) && !/^(#{1,6}\s|>|\s*\|.*\|\s*$|\s*([-*+]|\d+\.)\s|```)/.test(lines[i])){buf.push(lines[i]);i++}
+    flushPara(buf);
+  }
+  return out.join('\n');
+}
+
+function buildNav(current){
+  var html='';
+  DOCS.forEach(function(g){
+    html+='<h3>'+g.group+'</h3>';
+    g.items.forEach(function(it){
+      html+='<a href="#/'+encodeURIComponent(it.f)+'"'+(it.f===current?' class="on"':'')+'>'+it.t+'</a>';
+    });
+  });
+  document.getElementById('nav').innerHTML=html;
+}
+
+function find(hash){
+  for(var a=0;a<DOCS.length;a++)for(var b=0;b<DOCS[a].items.length;b++){
+    if(DOCS[a].items[b].f===hash)return DOCS[a].items[b];
+  }
+  return null;
+}
+
+function load(){
+  var hash=decodeURIComponent((location.hash||'').replace(/^#\//,''));
+  if(!hash){
+    for(var a=0;a<DOCS.length;a++)for(var b=0;b<DOCS[a].items.length;b++){
+      if(DOCS[a].items[b].f==='PRD.md')hash=DOCS[a].items[b].f;
+    }
+  }
+  var doc=find(hash)||DOCS[0].items[0];
+  buildNav(doc.f);
+  var main=document.getElementById('main');
+  main.innerHTML='<div class="loading">正在加载 '+doc.t+'…</div>';
+  fetch(doc.p+'?v202609232159').then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    return r.text();
+  }).then(function(t){
+    main.innerHTML=md(t);
+    main.querySelectorAll('a').forEach(function(a){
+      var hr=a.getAttribute('href')||'';
+      if(/^https?:/.test(hr)){a.setAttribute('target','_blank');a.setAttribute('rel','noopener');return}
+      var base=doc.p.split('/').slice(0,-1).join('/');
+      var parts=(base+'/'+hr).split('/'),stack=[];
+      parts.forEach(function(p){if(p==='..')stack.pop();else if(p!=='.')stack.push(p)});
+      a.setAttribute('href','#/'+encodeURIComponent(stack[stack.length-1]));
+    });
+    window.scrollTo(0,0);
+  }).catch(function(e){
+    main.innerHTML='<div class="err"><b>文档加载失败</b><br>'+doc.t+'（'+e.message+'）<br><br>请确认该文档文件与本站处于同一发布目录下；或返回<a href="index.html?v202609232159">项目主页</a>查看。</div>';
+  });
+}
+
+window.addEventListener('hashchange',load);
+load();
+</script>
+<script src="totop.js?v202609232159"></script>
+</body>
+</html>
