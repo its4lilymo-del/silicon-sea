@@ -56,6 +56,7 @@
         →  更新 digests.json 索引
         →  递增站点版本戳（bump-version.py，重写各页内嵌版本号）
         →  部署 Cloudflare Pages（wrangler pages deploy）
+        →  推送 GitHub（tools/sync-github.py，失败不阻塞主流程）
 ```
 
 发布通道同时覆盖：企业微信群机器人推送 → 线上站点同步。
