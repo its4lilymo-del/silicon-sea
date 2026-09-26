@@ -153,6 +153,13 @@
     .hero__cta { transition: none; }
   }
 
+  /* ?poster=1 海报模式：专供作品集 4K 截图。
+     动画时长归零（瞬间停在终态，不会截到中间帧）、隐藏光标；
+     背景固定为 hero-poster.jpg 海报帧（不加载视频，构图每次完全一致）。 */
+  html.jm-poster .fade-up { animation-duration: 0s; animation-delay: 0s; }
+  html.jm-poster { cursor: none; }
+  html.jm-poster .hero__cta { transition: none; }
+
   /* 手机端微调（规格基准为 1920×1080，窄屏补竖向空间） */
   @media (max-width: 640px) {
     .hero__eyebrow { letter-spacing: .24em; text-indent: .24em; }
@@ -166,7 +173,7 @@
 <script>
 /* 版本自愈：拉远端 version.txt 与页面内嵌版本号比对，不一致则换新 URL 重载 */
 (function(){
-  var VER="v202609250649";
+  var VER="v202609260837";
   try{
     var x=new XMLHttpRequest();
     x.open('GET','version.txt?_='+Date.now(),true);
@@ -178,11 +185,19 @@
       if(sessionStorage.getItem(k)==="1") return;
       sessionStorage.setItem(k,"1");
       var u=location.href.split("#")[0].split("?")[0];
-      location.replace(u+'?'+v+'&_='+Date.now());
+      /* 海报模式参数跨版本保留：?poster=1 重载后不丢 */
+      var keep=location.search.indexOf('poster=')!==-1?'&poster=1':'';
+      location.replace(u+'?'+v+keep+'&_='+Date.now());
     };
     x.send();
   }catch(e){}
 })();
+</script>
+<script>
+/* ?poster=1 海报模式开关：挂 html 类，CSS 据此跳过入场动画并隐藏光标 */
+if(location.search.indexOf('poster=')!==-1){
+  document.documentElement.className+=' jm-poster';
+}
 </script>
 </head>
 <body>
@@ -196,6 +211,8 @@
   (function(){
     var v = document.querySelector('.bg-video');
     if(!v || !v.dataset.src) return;
+    /* ?poster=1：海报构图固定为静态海报帧，不加载背景视频 */
+    if(location.search.indexOf('poster=')!==-1) return;
     var c = navigator.connection || {};
     var slow = c.saveData || /2g/i.test(c.effectiveType || '');
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -207,8 +224,8 @@
   </script>
 
   <nav class="hero__nav fade-up d100">
-    <a href="archive.html?v202609250649">往期日报</a>
-    <a href="about.html?v202609250649">关于我们</a>
+    <a href="archive.html?v202609260837">往期日报</a>
+    <a href="about.html?v202609260837">关于我们</a>
   </nav>
 
   <div class="hero__top fade-up d300">
@@ -219,7 +236,7 @@
   <div class="hero__bottom fade-up d500">
     <p class="hero__subtitle">10 分钟读懂今天</p>
     <p class="hero__meta">具身智能 × 智能硬件出海 · 日报</p>
-    <a class="hero__cta" href="today.html?v202609250649">今日日报</a>
+    <a class="hero__cta" href="today.html?v202609260837">今日日报</a>
   </div>
 </section>
 </body>
