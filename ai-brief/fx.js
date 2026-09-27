@@ -196,9 +196,13 @@ function fxInit(){
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
 
+    var seq = 0;
     [].forEach.call(blocks, function (b) {
       /* 筛选栏不参与渐入，避免刚加载时按钮不可见 */
       if (b.classList.contains('gradefilter')) return;
+      /* 级联延迟：同一章节内按顺序依次浮现，跨章节重置 */
+      if (b.tagName === 'H2') seq = 0; else seq++;
+      b.style.transitionDelay = Math.min(seq * 0.07, 0.35).toFixed(2) + 's';
       b.classList.add('reveal');
       io.observe(b);
     });
