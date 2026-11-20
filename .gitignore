@@ -21,3 +21,6 @@ Thumbs.db
 node_modules/
 __pycache__/
 *.pyc
+
+# 含 webhook 密钥的临时推送脚本，禁止入库
+tools/_push_wecom*.py
